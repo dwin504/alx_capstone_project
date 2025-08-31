@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Music Player - Discover and play music from millions of tracks"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player - Discover Your Sound</title>
     
-    <!-- Preconnect to Deezer API for faster loading -->
+    <!-- Preconnect to APIs -->
     <link rel="preconnect" href="https://api.deezer.com">
     <link rel="preconnect" href="https://e-cdns-images.dzcdn.net">
-    <link rel="preconnect" href="https://cdns-preview.dzcdn.net">
-    
-    <title>Music Player - Discover Your Sound</title>
     
     <style>
       /* Loading screen styles */
@@ -61,7 +52,7 @@
       </div>
     </noscript>
     
-    <!-- Loading screen (will be removed by React) -->
+    <!-- Loading screen -->
     <div id="loading">
       <div class="loading-spinner"></div>
       <p>Loading Music Player...</p>
@@ -69,6 +60,8 @@
     
     <!-- React root element -->
     <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
     
     <script>
       // Remove loading screen when React app loads
