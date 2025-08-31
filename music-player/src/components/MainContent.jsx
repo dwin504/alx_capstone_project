@@ -63,3 +63,25 @@ const MainContent = ({ onTrackSelect }) => {
       </div>
     );
   }
+    if (popularTracks.length > 0) {
+    return (
+      <div className="main-content-wrapper">
+        <main className="main-content">
+          <div className="content-header">
+            <h1 className="page-title">Music Player</h1>
+            
+            <form onSubmit={handleSearch} className="search-box">
+              <input 
+                type="text" 
+                placeholder="Search for songs, artists, or albums..." 
+                className="search-input"
+                value={localQuery}
+                onChange={handleInputChange}
+              />
+              <button 
+                type="submit" 
+                className="search-btn"
+              ></button>
+              </form>
+          </div>
+
