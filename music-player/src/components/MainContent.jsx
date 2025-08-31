@@ -84,4 +84,52 @@ const MainContent = ({ onTrackSelect }) => {
               ></button>
               </form>
           </div>
+          <div className="content-body">
+            <TrackList 
+              tracks={popularTracks}
+              title="Trending Now"
+              showNumber={true}
+              onTrackSelect={onTrackSelect}
+            />
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="main-content-wrapper">
+      <main className="main-content">
+        <div className="now-playing-view">
+          <div className="now-playing-card">
+            <div className="album-art-large">
+              <img 
+                src="/album-cover.jpg" 
+                alt="Album cover" 
+                className="album-image"
+              />
+            </div>
+            
+            <div className="now-playing-info">
+              <h1 className="now-playing-title">Draw In My Cup</h1>
+              <p className="now-playing-artist">KPMG Burger</p>
+              
+              <div className="progress-container">
+                <div className="progress-bar-large">
+                  <div className="progress-fill-large"></div>
+                </div>
+                <div className="progress-time">
+                  <span className="current-time">2:36</span>
+                  <span className="total-time">5:39</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default MainContent;
 
