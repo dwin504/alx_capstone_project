@@ -1,0 +1,25 @@
+.app {
+  display: grid;
+  grid-template-areas: 
+    "sidebar main"
+    "player player";
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.main-content-wrapper {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.player-controls {
+  grid-area: player;
+}
