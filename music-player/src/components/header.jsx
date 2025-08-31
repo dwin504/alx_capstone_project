@@ -24,4 +24,9 @@ const Header = ({ onSearch }) => {
           </button>
           <button 
             className={`nav-link ${activeTab === 'search' ? 'nav-link--active' : ''}`}
-            onClick={() => setActiveTab('search')}            
+            onClick={() => setActiveTab('search')}
+              Search
+          </button>
+          <button 
+            className={`nav-link ${activeTab === 'library' ? 'nav-link--active' : ''}`}
+            onClick={() => setActiveTab('library')}            
