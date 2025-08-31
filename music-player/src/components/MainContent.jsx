@@ -38,3 +38,28 @@ const MainContent = ({ onTrackSelect }) => {
               </button>
             </form>
           </div>
+            <div className="content-body">
+            {error && (
+              <div className="error-message">
+                Error: {error}
+              </div>
+            )}
+
+            {isLoading ? (
+              <div className="loading-state">
+                <div className="loading-spinner"></div>
+                <p>Searching for music...</p>
+              </div>
+            ) : (
+              <TrackList 
+                tracks={searchResults}
+                title={localQuery ? `Search Results for "${localQuery}"` : 'Search Results'}
+                showNumber={false}
+                onTrackSelect={onTrackSelect}
+              />
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
