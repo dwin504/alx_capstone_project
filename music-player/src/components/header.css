@@ -124,13 +124,7 @@
   color: var(--text-secondary);
   font-size: 18px;
 }
-/* Logo styles */
-.app-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 24px;
-}
+
 
 .logo-img {
   width: 28px;
@@ -149,4 +143,22 @@
   font-weight: bold;
   margin-right: 20px;
   color: var(--accent-primary);
+}
+/* Logo container */
+.app-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24px;
+}
+
+/* Round & bigger logo */
+.logo-img {
+  width: 48px;   /* make bigger */
+  height: 48px;
+  border-radius: 50%;  /* ✅ round shape */
+  object-fit: cover;   /* keeps aspect ratio */
+  background: var(--accent-primary); /* fallback background */
+  padding: 6px;        /* optional: inner spacing */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* optional: soft shadow */
 }
