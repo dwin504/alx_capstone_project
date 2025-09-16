@@ -1,20 +1,25 @@
+// 🔧 Add proxy to bypass CORS (for testing only)
+const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
 const API_BASE_URL = 'https://api.deezer.com';
 
 export const searchTracks = async (query) => {
   try {
     console.log('Searching Music Player for:', query);
-    
-    const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`);
-       if (!response.ok) {
+
+    const response = await fetch(
+      `${PROXY_URL}${API_BASE_URL}/search?q=${encodeURIComponent(query)}`
+    );
+
+    if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     if (!data.data || data.data.length === 0) {
       throw new Error('No tracks found for this search');
     }
-    
+
     const transformedTracks = data.data.map(track => ({
       id: track.id,
       name: track.title,
@@ -26,10 +31,10 @@ export const searchTracks = async (query) => {
       artistId: track.artist.id,
       albumId: track.album.id
     }));
-    
+
     console.log('Music Player found tracks:', transformedTracks.length);
     return transformedTracks;
-    
+
   } catch (error) {
     console.error('Music Player search error:', error);
     throw new Error(error.message || 'Failed to search tracks');
@@ -38,14 +43,16 @@ export const searchTracks = async (query) => {
 
 export const getPopularTracks = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/chart/0/tracks?limit=20`);
-    
+    const response = await fetch(
+      `${PROXY_URL}${API_BASE_URL}/chart/0/tracks?limit=20`
+    );
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     const popularTracks = data.data.map(track => ({
       id: track.id,
       name: track.title,
@@ -57,9 +64,9 @@ export const getPopularTracks = async () => {
       artistId: track.artist.id,
       albumId: track.album.id
     }));
-    
+
     return popularTracks;
-    
+
   } catch (error) {
     console.error('Music Player error fetching popular tracks:', error);
     throw new Error('Failed to load popular tracks');
