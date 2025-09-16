@@ -168,3 +168,33 @@
   font-size: 14px;
   color: var(--text-secondary);
 }
+/* Ensure scrolling is on the right side */
+body, .app, .main-content-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar (WebKit-based browsers: Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* slim scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary); /* track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary); /* thumb color */
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary); /* hover effect */
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) var(--bg-secondary);
+}

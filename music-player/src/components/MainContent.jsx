@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearch } from '../context/SearchContext.jsx';
 import TrackList from './TrackList.jsx';
 import './MainContent.css';
+
 const MainContent = ({ onTrackSelect }) => {
   const { searchResults, popularTracks, isLoading, error, performSearch } = useSearch();
   const [localQuery, setLocalQuery] = useState('');
@@ -14,12 +15,14 @@ const MainContent = ({ onTrackSelect }) => {
   const handleInputChange = (e) => {
     setLocalQuery(e.target.value);
   };
-   if (searchResults.length > 0 || isLoading || error) {
+
+  if (searchResults.length > 0 || isLoading || error) {
     return (
       <div className="main-content-wrapper">
         <main className="main-content">
           <div className="content-header">
-            <h1 className="page-title">Music Player</h1>
+            {/* ✅ Title changed */}
+            <h1 className="page-title">Discover Beats</h1>
             
             <form onSubmit={handleSearch} className="search-box">
               <input 
@@ -38,7 +41,8 @@ const MainContent = ({ onTrackSelect }) => {
               </button>
             </form>
           </div>
-            <div className="content-body">
+
+          <div className="content-body">
             {error && (
               <div className="error-message">
                 Error: {error}
@@ -63,12 +67,14 @@ const MainContent = ({ onTrackSelect }) => {
       </div>
     );
   }
-    if (popularTracks.length > 0) {
+
+  if (popularTracks.length > 0) {
     return (
       <div className="main-content-wrapper">
         <main className="main-content">
           <div className="content-header">
-            <h1 className="page-title">Music Player</h1>
+            {/* ✅ Title changed */}
+            <h1 className="page-title">Discover Beats</h1>
             
             <form onSubmit={handleSearch} className="search-box">
               <input 
@@ -78,12 +84,10 @@ const MainContent = ({ onTrackSelect }) => {
                 value={localQuery}
                 onChange={handleInputChange}
               />
-              <button 
-                type="submit" 
-                className="search-btn"
-              ></button>
-              </form>
+              <button type="submit" className="search-btn"></button>
+            </form>
           </div>
+
           <div className="content-body">
             <TrackList 
               tracks={popularTracks}
@@ -132,4 +136,3 @@ const MainContent = ({ onTrackSelect }) => {
 };
 
 export default MainContent;
-
