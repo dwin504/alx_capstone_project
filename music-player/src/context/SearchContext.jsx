@@ -1,12 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { searchTracks, getPopularTracks } from '../services/deezerApi.js';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  searchTracks,
+  getPopularTracks,
+  getPopularArtists, // ✅ new
+} from "../services/deezerApi.js";
 
 const SearchContext = createContext();
 
 export const useSearch = () => {
   const context = useContext(SearchContext);
   if (!context) {
-    throw new Error('useSearch must be used within a SearchProvider');
+    throw new Error("useSearch must be used within a SearchProvider");
   }
   return context;
 };
@@ -14,12 +18,14 @@ export const useSearch = () => {
 export const SearchProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [popularTracks, setPopularTracks] = useState([]);
+  const [popularArtists, setPopularArtists] = useState([]); // ✅ new
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadPopularTracks();
+    loadPopularArtists(); // ✅ new
   }, []);
 
   const loadPopularTracks = async () => {
@@ -28,10 +34,20 @@ export const SearchProvider = ({ children }) => {
       const tracks = await getPopularTracks();
       setPopularTracks(tracks);
     } catch (err) {
-      console.error('Music Player failed to load popular tracks:', err);
-      setError('Failed to load popular tracks');
+      console.error("Music Player failed to load popular tracks:", err);
+      setError("Failed to load popular tracks");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // ✅ new: load artists
+  const loadPopularArtists = async () => {
+    try {
+      const artists = await getPopularArtists();
+      setPopularArtists(artists);
+    } catch (err) {
+      console.error("Music Player failed to load popular artists:", err);
     }
   };
 
@@ -59,19 +75,21 @@ export const SearchProvider = ({ children }) => {
 
   const clearSearch = () => {
     setSearchResults([]);
-    setSearchQuery('');
+    setSearchQuery("");
     setError(null);
   };
 
   const value = {
     searchResults,
     popularTracks,
+    popularArtists, // ✅ exposed to consumers
     isLoading,
     error,
     searchQuery,
     performSearch,
     clearSearch,
-    loadPopularTracks
+    loadPopularTracks,
+    loadPopularArtists,
   };
 
   return (

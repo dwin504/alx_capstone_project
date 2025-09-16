@@ -1,65 +1,25 @@
-import React from 'react';
-import './TrackList.css';
+import React from "react";
+import "./TrackList.css";
 
-const TrackList = ({ tracks, title, showNumber = false, onTrackSelect }) => {
-  const handleTrackClick = (track) => {
-    if (onTrackSelect) {
-      onTrackSelect(track);
-    }
-  };
-
-  if (!tracks || tracks.length === 0) {
-    return (
-      <div className="tracklist-section">
-        {title && <h3 className="tracklist-title">{title}</h3>}
-        <p className="no-tracks">No tracks found. Try searching for something!</p>
-      </div>
-    );
-  }
-
+const TrackList = ({ tracks, title, onTrackSelect }) => {
   return (
-    <div className="tracklist-section">
-      {title && <h3 className="tracklist-title">{title}</h3>}
-      
-      <div className="tracklist">
-        {tracks.map((track, index) => (
-          <div 
-            key={track.id} 
+    <div className="tracklist">
+      <h2>{title}</h2>
+      <ul>
+        {tracks.map((track) => (
+          <li
+            key={track.id}
             className="track-item"
-            onClick={() => handleTrackClick(track)}
+            onClick={() => onTrackSelect && onTrackSelect(track)}
           >
-            {showNumber && (
-              <span className="track-number">
-                {index + 1}
-              </span>
-            )}
-            
-            <img 
-              src={track.albumCover} 
-              alt={`Album cover for ${track.albumName}`}
-              className="track-album-cover"
-            />
-            
+            <img src={track.albumCover} alt={track.name} className="track-cover" />
             <div className="track-info">
-              <p className="track-name">{track.name}</p>
-              <p className="track-artist">{track.artist}</p>
+              <div className="track-name">{track.name}</div>
+              <div className="track-artist">{track.artist}</div>
             </div>
-            
-            <div className="track-details">
-              <span className="track-duration">{track.duration}</span>
-              <button 
-                className="track-play-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleTrackClick(track);
-                }}
-              >
-                ▶
-              </button>
-            </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

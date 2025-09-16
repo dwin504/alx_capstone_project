@@ -1,26 +1,20 @@
-// 🔧 Add proxy to bypass CORS (for testing only)
+// 🔧 Add proxy for testing (CORS bypass)
 const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
-const API_BASE_URL = 'https://api.deezer.com';
+const API_BASE_URL = "https://api.deezer.com";
 
 export const searchTracks = async (query) => {
   try {
-    console.log('Searching Music Player for:', query);
-
     const response = await fetch(
       `${PROXY_URL}${API_BASE_URL}/search?q=${encodeURIComponent(query)}`
     );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
-
     if (!data.data || data.data.length === 0) {
-      throw new Error('No tracks found for this search');
+      throw new Error("No tracks found for this search");
     }
 
-    const transformedTracks = data.data.map(track => ({
+    return data.data.map((track) => ({
       id: track.id,
       name: track.title,
       artist: track.artist.name,
@@ -29,15 +23,11 @@ export const searchTracks = async (query) => {
       albumName: track.album.title,
       previewUrl: track.preview,
       artistId: track.artist.id,
-      albumId: track.album.id
+      albumId: track.album.id,
     }));
-
-    console.log('Music Player found tracks:', transformedTracks.length);
-    return transformedTracks;
-
   } catch (error) {
-    console.error('Music Player search error:', error);
-    throw new Error(error.message || 'Failed to search tracks');
+    console.error("Music Player search error:", error);
+    throw new Error(error.message || "Failed to search tracks");
   }
 };
 
@@ -46,14 +36,10 @@ export const getPopularTracks = async () => {
     const response = await fetch(
       `${PROXY_URL}${API_BASE_URL}/chart/0/tracks?limit=20`
     );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
-
-    const popularTracks = data.data.map(track => ({
+    return data.data.map((track) => ({
       id: track.id,
       name: track.title,
       artist: track.artist.name,
@@ -62,24 +48,41 @@ export const getPopularTracks = async () => {
       albumName: track.album.title,
       previewUrl: track.preview,
       artistId: track.artist.id,
-      albumId: track.album.id
+      albumId: track.album.id,
     }));
-
-    return popularTracks;
-
   } catch (error) {
-    console.error('Music Player error fetching popular tracks:', error);
-    throw new Error('Failed to load popular tracks');
+    console.error("Music Player error fetching popular tracks:", error);
+    throw new Error("Failed to load popular tracks");
+  }
+};
+
+// 🔥 NEW: Fetch popular artists
+export const getPopularArtists = async () => {
+  try {
+    const response = await fetch(
+      `${PROXY_URL}${API_BASE_URL}/chart/0/artists?limit=10`
+    );
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+    return data.data.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+      picture: artist.picture_medium,
+    }));
+  } catch (error) {
+    console.error("Music Player error fetching popular artists:", error);
+    throw new Error("Failed to load popular artists");
   }
 };
 
 const formatDuration = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
 export const parseDuration = (durationString) => {
-  const [minutes, seconds] = durationString.split(':').map(Number);
+  const [minutes, seconds] = durationString.split(":").map(Number);
   return minutes * 60 + seconds;
 };
