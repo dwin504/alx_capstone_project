@@ -124,3 +124,29 @@
   color: var(--text-secondary);
   font-size: 18px;
 }
+/* Logo styles */
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 24px;
+}
+
+.logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--accent-primary);
+  letter-spacing: 1px;
+}
+.app-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+  color: var(--accent-primary);
+}

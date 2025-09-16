@@ -6,17 +6,30 @@ const Sidebar = () => {
   const { popularArtists, performSearch } = useSearch();
 
   const handleArtistClick = (artistName) => {
-    performSearch(artistName); // 🔥 search this artist’s tracks
+    performSearch(artistName);
+  };
+
+  const handleGenreClick = (genre) => {
+    performSearch(genre); // search tracks in this genre
   };
 
   return (
     <aside className="sidebar">
-      {/* Example navigation section */}
+      {/* ✅ Genres Section */}
       <div className="sidebar-section">
-        <h3 className="sidebar-title">Navigation</h3>
+        <h3 className="sidebar-title">Genres</h3>
         <ul className="sidebar-list">
-          <li className="sidebar-item">🏠 Home</li>
-          <li className="sidebar-item">📚 Your Library</li>
+          {["Pop", "Hip Hop", "Rock", "Afrobeat", "Jazz", "Electronic"].map(
+            (genre) => (
+              <li
+                key={genre}
+                className="sidebar-item"
+                onClick={() => handleGenreClick(genre)}
+              >
+                <span className="artist-name">{genre}</span>
+              </li>
+            )
+          )}
         </ul>
       </div>
 
