@@ -40,7 +40,7 @@ const Header = ({ currentPage, setCurrentPage }) => {
               className="user-avatar"
             />
             <span className="user-name">Username</span>
-            <span className="dropdown-arrow">⌄</span>
+            <span className="dropdown-arrow"></span>
           </div>
         </div>
       </nav>
