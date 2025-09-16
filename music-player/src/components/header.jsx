@@ -35,7 +35,7 @@ const Header = ({ currentPage, setCurrentPage }) => {
         <div className="user-section">
           <div className="user-info">
             <img
-              src="/user-avatar.jpg"
+              src="/user-avatar.png"
               alt="User profile"
               className="user-avatar"
             />
