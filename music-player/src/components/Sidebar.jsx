@@ -3,11 +3,15 @@ import { useSearch } from "../context/SearchContext.jsx";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const { popularArtists } = useSearch();
+  const { popularArtists, performSearch } = useSearch();
+
+  const handleArtistClick = (artistName) => {
+    performSearch(artistName); // 🔥 search this artist’s tracks
+  };
 
   return (
     <aside className="sidebar">
-      {/* Example: Home / Library links can stay here */}
+      {/* Example navigation section */}
       <div className="sidebar-section">
         <h3 className="sidebar-title">Navigation</h3>
         <ul className="sidebar-list">
@@ -22,7 +26,11 @@ const Sidebar = () => {
         <ul className="sidebar-list">
           {popularArtists.length > 0 ? (
             popularArtists.slice(0, 6).map((artist) => (
-              <li key={artist.id} className="sidebar-item">
+              <li
+                key={artist.id}
+                className="sidebar-item"
+                onClick={() => handleArtistClick(artist.name)}
+              >
                 <img
                   src={artist.picture}
                   alt={artist.name}

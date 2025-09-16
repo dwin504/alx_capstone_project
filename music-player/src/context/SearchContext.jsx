@@ -25,7 +25,7 @@ export const SearchProvider = ({ children }) => {
 
   useEffect(() => {
     loadPopularTracks();
-    loadPopularArtists(); // ✅ new
+    loadPopularArtists(); // ✅ fetch artists too
   }, []);
 
   const loadPopularTracks = async () => {
@@ -41,7 +41,7 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
-  // ✅ new: load artists
+  // ✅ new: load popular artists
   const loadPopularArtists = async () => {
     try {
       const artists = await getPopularArtists();
@@ -82,7 +82,7 @@ export const SearchProvider = ({ children }) => {
   const value = {
     searchResults,
     popularTracks,
-    popularArtists, // ✅ exposed to consumers
+    popularArtists, // ✅ exposed to Sidebar
     isLoading,
     error,
     searchQuery,
