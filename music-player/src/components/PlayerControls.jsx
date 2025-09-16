@@ -1,20 +1,47 @@
-import React from "react";
-import { useApp } from "../context/AppContext.jsx";
-import "./PlayerControls.css";  // ← Fixed the import path
+import React, { useRef, useEffect } from "react";
+import "./PlayerControls.css";
 
 const PlayerControls = ({ currentTrack, isPlaying, onPlay, onPause }) => {
-  const { playNextTrack } = useApp();
+  const audioRef = useRef(null);
+
+  // When track changes, load the new preview and autoplay
+  useEffect(() => {
+    if (currentTrack && audioRef.current) {
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch(err => console.log("Playback error:", err));
+      }
+    }
+  }, [currentTrack]);
+
+  // Handle play/pause toggle
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.play().catch(err => console.log("Playback error:", err));
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   if (!currentTrack) {
-    return null;
+    return (
+      <div className="player-controls">
+        <div className="now-playing">
+          <div className="now-playing-info">
+            <div className="now-playing-name">No track selected</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <footer className="player-controls">
+    <div className="player-controls">
       <div className="now-playing">
-        <img 
-          src={currentTrack.albumCover} 
-          alt="Album cover" 
+        <img
+          src={currentTrack.albumCover}
+          alt={currentTrack.name}
           className="now-playing-art"
         />
         <div className="now-playing-info">
@@ -25,38 +52,22 @@ const PlayerControls = ({ currentTrack, isPlaying, onPlay, onPause }) => {
 
       <div className="playback-controls">
         <div className="playback-buttons">
-          <button className="control-btn" title="Shuffle">
-            🔀
-          </button>
-          <button className="control-btn" title="Previous">
-            ⏮
-          </button>
-          <button 
+          <button className="control-btn">⏮️</button>
+          <button
             className="play-pause-btn"
             onClick={isPlaying ? onPause : onPlay}
-            title={isPlaying ? 'Pause' : 'Play'}
           >
-            {isPlaying ? '⏸' : '▶'}
+            {isPlaying ? "⏸️" : "▶️"}
           </button>
-          <button 
-            className="control-btn" 
-            onClick={playNextTrack}
-            title="Next"
-          >
-            ⏭
-          </button>
-          <button className="control-btn" title="Repeat">
-            🔁
-          </button>
+          <button className="control-btn">⏭️</button>
         </div>
       </div>
 
-      <div className="volume-control">
-        <button className="control-btn" title="Volume">
-          🔊
-        </button>
-      </div>
-    </footer>
+      {/* The audio element */}
+      <audio ref={audioRef}>
+        <source src={currentTrack.previewUrl} type="audio/mpeg" />
+      </audio>
+    </div>
   );
 };
 
